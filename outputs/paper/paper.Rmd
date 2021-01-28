@@ -1,94 +1,33 @@
 ---
-title: "TBD"
-subtitle: "TBD"
-author: "TBD"
-thanks: "Code and data are available at: LINK."
+title: "City of Toronto's development applications summary between 2008 and 2021"
+author: "Yang Wu"
+thanks: "data are available at: https://open.toronto.ca/dataset/development-applications/."
 date: "`r format(Sys.time(), '%d %B %Y')`"
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: City of Toronto's applicatioin information portal is a web page where you can find information about the new developments in Toronto.The author downloads data set from Open Data Toronto and summarize all the approved applications between 2008 and 2021.For governments, these data provides a overview for them to consider the next step urban planning. For individuals, these data make them aware what infrastructure and new projects are around.
 output:
   bookdown::pdf_document2:
-toc: FALSE
+  toc: FALSE
+Contact: Yangg.wu@mail.utoronto.ca
 bibliography: references.bib
 ---
+#Introduction 
 
+
+
+# Setup workspace and gather data
+In this paper, all the analysis are conducted by R statistical programming language.[@citeR] Through the **opendatatoronto** package, I download the data set for toronto development applications. This package allows users to download the data set in a reproducible way.[@citeO] The data are also availavle at this link:https://open.toronto.ca/dataset/development-applications/. In terms of data cleaning, I will use **tidyverse** package.[@tidy] Another two data Visualization packages used in the Exploratory Data Analysis are **ggploat2** [@ggplot] and **kableExtra**[@kable]
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
+library(opendatatoronto)
 library(tidyverse)
-library(palmerpenguins)
+library(ggplot2)
+library(kableExtra)
 ```
-
-# Introduction
-
-
-
-
 # Data
 
-Our data is of penguins (Figure \@ref(fig:bills)).
-
-```{r bills, fig.cap="Bills of penguins", echo = FALSE}
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = FALSE) +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
-```
-
-Talk more about it.
-
-Also bills and their average (Figure \@ref(fig:billssssss)). (Notice how you can change the height and width so they don't take the whole page?)
-
-```{r billssssss, fig.cap="More bills of penguins", echo = FALSE, fig.width=8, fig.height=4}
-
-# This needs to be about the random data tha tI sasmpled?
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = FALSE) +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
-```
-
-Talk way more about it. 
 
 
 
-# Model
-
-\begin{equation}
-Pr(\theta | y) = \frac{Pr(y | \theta) Pr(\theta)}{Pr(y)}  (\#eq:bayes)
-\end{equation}
-
-Equation \@ref(eq:bayes) seems useful, eh?
-
-Here's a dumb example of how to use some references: In paper we run our analysis in `R` [@citeR]. We also use the `tidyverse` which was written by @thereferencecanbewhatever If we were interested in baseball data then @citeLahman could be useful. 
-
-
-# Results
-
-# Discussion
-
-## First discussion point
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
-
-## Second discussion point
-
-## Third discussion point
-
-## Weaknesses and next steps
-
-Weaknesses and next steps should also be included.
-
-\newpage
-
-# Appendix {-}
-
-\newpage
 
 
 # References
