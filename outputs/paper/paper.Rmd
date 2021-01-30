@@ -1,7 +1,7 @@
 ---
 title: "City of Toronto's development applications summary between 2008 and 2021"
 author: "Yang Wu"
-thanks: "data are available at: https://open.toronto.ca/dataset/development-applications/."
+thanks: "code and data are available at: https://github.com/yangg1224/Toronto-development-applications.git/."
 date: "`r format(Sys.time(), '%d %B %Y')`"
 abstract: The author downloads Toronto's development applicatioin data set from Open Data Toronto website and summarize all the approved and in progress applications between 2008 and 2021.For governments, these data provides a overview for them to consider the next step urban planning. For individuals, these data make them aware what infrastructure and new projects are around.
 output:
