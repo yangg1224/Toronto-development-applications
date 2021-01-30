@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.1.28)  29 JAN 2021 21:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.1.28)  30 JAN 2021 14:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -601,12 +601,12 @@ dfTeX warning (ext4): destination with the same identifier (name{table.1}) has
 been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.171 
+l.155 
       ]
 
-LaTeX Warning: Reference `fi:graph' on page 3 undefined on input line 176.
+LaTeX Warning: Reference `fig:graph' on page 3 undefined on input line 176.
 
-<paper_files/figure-latex/graph-1.pdf, id=84, 722.7pt x 289.08pt>
+<paper_files/figure-latex/graph-1.pdf, id=88, 722.7pt x 289.08pt>
 File: paper_files/figure-latex/graph-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/graph-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/graph-1.pdf  used on input li
@@ -617,24 +617,39 @@ Overfull \hbox (38.11653pt too wide) in paragraph at lines 175--178
 \T1/lmr/m/n/10 ure1 []) [] 
  []
 
-[3 <./paper_files/figure-latex/graph-1.pdf>] [4pdfTeX warning (ext4): destinati
-on with the same identifier (name{table.2}) has been already used, duplicate ig
-nored
+
+LaTeX Warning: Reference `fig:graph2' on page 3 undefined on input line 182.
+
+<paper_files/figure-latex/graph2-1.pdf, id=89, 722.7pt x 289.08pt>
+File: paper_files/figure-latex/graph2-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/graph2-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/graph2-1.pdf  used on input l
+ine 183.
+(pdftex.def)             Requested size: 469.76045pt x 187.90417pt.
+
+Underfull \hbox (badness 1038) in paragraph at lines 182--184
+\T1/lmr/m/n/10 in progress ap-pli-ca-tions by street name, and the re-sult is s
+hown in the Fig-ure2. (Fig-ure2 [])
+ []
+
+[3 <./paper_files/figure-latex/graph-1.pdf>] [4 <./paper_files/figure-latex/gra
+ph2-1.pdf>] [5pdfTeX warning (ext4): destination with the same identifier (name
+{table.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.251 
-      ] [5] (./paper.aux)
+l.261 \end{document}
+                    ] (./paper.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 675EF61C315FE4150AEAAC68F0ECDD83;1384.
+(rerunfilecheck)             Checksum: 3A9E1B81499E6B661F4AA7FF5080F39C;1551.
  ) 
 Here is how much of TeX's memory you used:
- 12406 strings out of 481252
- 176647 string characters out of 5915076
- 502140 words of memory out of 5000000
- 29052 multiletter control sequences out of 15000+600000
+ 12417 strings out of 481252
+ 176972 string characters out of 5915076
+ 501018 words of memory out of 5000000
+ 29060 multiletter control sequences out of 15000+600000
  470198 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  71i,12n,74p,714b,336s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -649,10 +664,10 @@ ts/type1/public/lm/lmr12.pfb></Users/yang/Library/TinyTeX/texmf-dist/fonts/type
 c/lm/lmr6.pfb></Users/yang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr
 8.pfb></Users/yang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb></
 Users/yang/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb>
-Output written on paper.pdf (5 pages, 257907 bytes).
+Output written on paper.pdf (5 pages, 263669 bytes).
 PDF statistics:
- 179 PDF objects out of 1000 (max. 8388607)
- 158 compressed objects within 2 object streams
- 37 named destinations out of 1000 (max. 500000)
- 86 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 192 PDF objects out of 1000 (max. 8388607)
+ 168 compressed objects within 2 object streams
+ 39 named destinations out of 1000 (max. 500000)
+ 99 words of extra memory for PDF output out of 10000 (max. 10000000)
 

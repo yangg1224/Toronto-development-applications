@@ -12,13 +12,13 @@ bibliography: references.bib
 ---
 # Introduction 
 
-Due to the aggravation of COVID, the chance of everyone going out is also decreasing. Therefore, there are fewer and fewer opportunities to discover new changes around you. However, The city develops faster than you think. Have you ever thought about what changes are happening around you every day? City of Toronto's application information portal is a web page where you can find information about the new developments in Toronto. If you just move here or If you are an smart investor interested in real estate, these information will be vital reference for you to choose the right place. 
+Due to the aggravation of COVID, the chance of everyone going out is also decreasing. Therefore, there are fewer and fewer opportunities to discover new changes around you. However, The city develops faster than you think. Have you ever thought about what changes are happening around you every day? City of Toronto's application information portal is a web page where you can find information about the new developments in Toronto. If you just move here or If you are a smart investor interested in real estate, this information will be a vital reference for you to choose the right place. 
 
-The paper is organized into three chapters. The following chapter will describe the detailed information about the dataset and talk about the data bias. At the end, the last chapter will do the data visualization and exploratory data analysis. 
+The following chapter will describe the detailed information about the dataset and talk about the data bias. In the last chapter, I will do the data visualization and exploratory data analysis. Analysis 1 uses a bar chart to illustrate total approved applications grouped by type. Analysis 2 gives an example to search all the relevant applications that existed in a specific street and list them in a table.
 
 
 # Setup workspace and gather data
-In this paper, all the data analyses are conducted by R statistical programming language.[@citeR] Through the **opendatatoronto** package, I download the data set for toronto development applications. This package allows users to download the data set in a reproducible way.[@citeO] In terms of data cleaning, I will use **tidyverse** package.[@tidy] Another two data Visualization packages used in the Exploratory Data Analysis are **ggploat2** [@ggplot] and **kableExtra**[@kable]
+In this paper, all the data analyses are conducted by **R statistical programming language**.[@citeR] Through the **opendatatoronto** package, I download the data set of toronto development applications. This package allows users to download the data set in a reproducible way.[@citeO] In terms of data cleaning, I will use **tidyverse** package.[@tidy] Another two data Visualization packages used in the Exploratory Data Analysis are **ggploat2** [@ggplot] and **kableExtra**[@kable]
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(opendatatoronto)
@@ -90,9 +90,9 @@ development_applications<-
 
 
 ```
-## Graph
+## analysis 1
 I am interested in the total numbers of approved applications through the year between 2008 and 2021. So i filter the application status and group by the application types. 
-Then, the result is shown in the Figure.  (Figure1 \@ref(fi:graph))
+Then, the result is shown in the Figure.  (Figure1 \@ref(fig:graph))
 ```{r graph,fig.cap="raw data set", echo = FALSE,fig.width=10, fig.height=4}
 accepted_applications <- 
   development_applications %>% 
@@ -105,15 +105,45 @@ accepted_applications <-
 
 p<-ggplot(accepted_applications,aes(application_type, Number, fill=application_type))+
   geom_bar(stat ="identity" )+
+  geom_text(aes(y=Number, label=Number), vjust=1.6, 
+            color="black", size=3.5)+
   ylab("numbers")+
-  ggtitle("Total approved application (2005-2021)")+
+  ggtitle("Total approved application (2008-2021)")+
   coord_flip()+
   theme_gray()
 
 p
 ```
 
-## Table
+
+## analysis 2
+
+As mentioned in the introduction, smart investor usually hold a long term view towards the property they invest. For those in progress development applications, although they have not finished yet, they might have a positive impact in the future. So based on this idea, I sort out all the in progress applications by street name, and the result is shown in the Figure2. (Figure2 \@ref(fig:graph2))
+```{r graph2,fig.cap="in process apps", echo = FALSE,fig.width=10, fig.height=4}
+in_progress_applications <- 
+  development_applications %>% 
+  tidyr::drop_na(status) %>% # We only want rows that have data for status
+  filter(status %in% c("In Process","Accepted", "Approved", "Council Approved","OMB Approved")) %>%# filter the applications only in progress status
+  group_by(street_name) %>% # We want to know the total number of applications by street name and application types
+  count(street_name) %>%
+  rename(In_Progress_Application_Numbers = n) %>%
+  arrange(desc(In_Progress_Application_Numbers)) %>% #sort in descending order by application numbers
+  head(5) # display top 5 
+
+
+
+p<-ggplot(in_progress_applications,aes(street_name, In_Progress_Application_Numbers, fill=In_Progress_Application_Numbers))+
+  geom_bar(stat ="identity" )+
+  geom_text(aes(y=In_Progress_Application_Numbers, label=In_Progress_Application_Numbers), vjust=1.6, 
+            color="white", size=3.5)+
+  ylab("numbers")+
+  ggtitle("Top 5 In Progress applications by street name")+
+  theme_linedraw()
+
+p
+```
+
+## analysis 3
 If i am person who want buy a house in Adelaide street, I probably would like to know more about the surrounding developments. Using **KableExtra**[@kable], the table below shows what are all the applications constructed or will be constructed near this street in 2020. 
 (Table \@ref(tab:table2))
 
@@ -138,6 +168,7 @@ ADELAIDE_street_applications %>%
   column_spec(4, color = "black")
 
 ```
+
 
 
 # References
