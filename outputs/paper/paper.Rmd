@@ -14,10 +14,12 @@ bibliography: references.bib
 
 Due to the aggravation of COVID, the chance of everyone going out is also decreasing. Therefore, there are fewer and fewer opportunities to discover new changes around you. However, The city develops faster than you think. Have you ever thought about what changes are happening around you every day? City of Toronto's application information portal is a web page where you can find information about the new developments in Toronto. If you just move here or If you are a smart investor interested in real estate, this information will be a vital reference for you to choose the right place. 
 
-The following chapter will describe the detailed information about the dataset and talk about the data bias. In the last chapter, I will do the data visualization and exploratory data analysis. Analysis 1 uses a bar chart to illustrate total approved applications grouped by type. Analysis 2 gives an example to search all the relevant applications that existed in a specific street and list them in a table.
+From the perspective of city planners, I summarized all the approved applications from 2008 to the present. Among them, Minal Variance applications accounted for the most. From the perspective of investors, I found that areas near Downsview Airport have great potential value.
+
+The following chapter will describe the detailed information about the dataset and talk about the data bias. In the last chapter, I will do the data visualization and exploratory data analysis. Analysis 1 uses a bar chart to illustrate total approved applications grouped by type. Analysis 2 sorts out the top  Five streets with the most potential value. Analysis 3 gives an example to search all the relevant applications that existed in a specific street and list them in a table.
 
 
-# Setup workspace and gather data
+# Setup workspace and packages state
 In this paper, all the data analyses are conducted by **R statistical programming language**.[@citeR] Through the **opendatatoronto** package, I download the data set of toronto development applications. This package allows users to download the data set in a reproducible way.[@citeO] In terms of data cleaning, I will use **tidyverse** package.[@tidy] Another two data Visualization packages used in the Exploratory Data Analysis are **ggploat2** [@ggplot] and **kableExtra**[@kable]
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -29,7 +31,7 @@ library(kableExtra)
 # Data description
 
 ## Load Data and introduction
-The data are available at this link:https://open.toronto.ca/dataset/development-applications/.
+The data are available at this link:https://open.toronto.ca/dataset/development-applications/. **opendatatoronto** package allows me to download the data set in a reproducible way.[@citeO]
 Firstly, I load the data and write them into csv file. With the help of **kableExtra**[@kable], let's have a quite look of the raw data. (Table \@ref(tab:loaddata)) I apologize the font is quite small here and you have to zoom in. 
 ```{r loaddata, fig.cap="raw data set", echo = FALSE,fig.width=18, fig.height=4}
 all_data <- 
@@ -49,16 +51,7 @@ all_data<-read.csv("raw_data.csv")
   kableExtra::kable_styling(latex_options = "scale_down") # use scale_down option to make the font smaller and knit a completed table to PDF
 ```
 
-This dataset lists all currently active (open) and inactive (closed) Community Planning applications, Committee of Adjustment applications and Toronto Local Appeal Body appeals received by the City between 2008 till present.The data set was published in three formats, which are CSV, Jason and XML.The latest time when the data was refreshed is Jan 27th, 2021. Also, this dataset is refreshed monthly.
-
-## Data bias 
-As we can see from the raw data set, it does not give the reasons why some applications are rejected or closed and why some applications are approved. Though this dataset is just a summary of Toronto's development applications, the decision behind the application exist ethical bias. Firstly, urban planners decide what goes where in the city. Obviously, the achievements of these planners are linked to the comments of the local people. So their decisions are often irrational, because they are affected by the mood of the local residents.[@urban]
-
-Another data bias is that currently urban planners would use data driven model to make a best development plan for the city. However, no matter how precises the data they collect, the model cannot understand the history. "Algorithms have difficulty understanding when the architecture in a certain neighborhood is historic to the city." [@urban]
-
-In terms of limitations of the dataset, there are many missing values in hearing_date column. I had planned to calculate a processing time for each application(hearing date - submitted date). Because of the missing values, the result will be not accurate. Besides, Under the status column, it explains the current status of the application. Because the decision of different types of application is made by different parties, there are more than ten "status" in the column which make readers confused. For example, "approved" and "accepted" are the same thing, but it lists in two ways. what is more,the  visualization tool is not compatible with X,Y coordinates in the dateset. 
-
-# Exploratory Data Analysis
+This dataset lists all currently active (open) and inactive (closed) Community Planning applications, Committee of Adjustment applications and Toronto Local Appeal Body appeals received by the City between 2008 till present.The data set has totally 66555 rows and contains 18 columns. The data set was published in three formats, which are CSV, Jason and XML.The latest time when the data was refreshed is Jan 27th, 2021. Also, this dataset is refreshed monthly.
 
 ## Data cleaning and preparation 
 Firstly, i will remove the rows with missing value to improve the accuracy. **Janitor** package is used to clean the column name. [@jan] Then, different types applications are interpreted as following:
@@ -69,7 +62,7 @@ Firstly, i will remove the rows with missing value to improve the accuracy. **Ja
  SB - Sub Division
  CO - Consent
  MV - Minor Variance
-I will complete the abbreviation so that readers can easily understand. The application submitted date has been separated into year, month and day for further analysis. 
+I will complete the abbreviation so that readers can easily understand. The application submitted date has been separated into year, month and day for further analysis. [@segal2016minor]
 ```{r datacleaning, include=FALSE}
 development_applications<-
   all_data %>% 
@@ -90,10 +83,24 @@ development_applications<-
 
 
 ```
+
+## Data bias 
+As we can see from the raw data set, it does not give the reasons why some applications are rejected or closed and why some applications are approved. Though this dataset is just a summary of Toronto's development applications, the decision behind the application exist ethical bias. Firstly, urban planners decide what goes where in the city. Obviously, the achievements of these planners are linked to the comments of the local people. So their decisions are often irrational, because they are affected by the mood of the local residents.[@urban]
+
+Another data bias is that currently urban planners would use data driven model to make a best development plan for the city. However, no matter how precises the data they collect, the model cannot understand the history. "Algorithms have difficulty understanding when the architecture in a certain neighborhood is historic to the city." [@urban]
+
+In terms of limitations of the dataset, there are many missing values in hearing_date column. I had planned to calculate a processing time for each application(hearing date - submitted date). Because of the missing values, the result will be not accurate. Besides, Under the status column, it explains the current status of the application. Because the decision of different types of application is made by different parties, there are more than ten "status" in the column which make readers confused. For example, "approved" and "accepted" are the same thing, but it lists in two ways. what is more,the  visualization tool is not compatible with X,Y coordinates in the dateset. 
+
+# Exploratory Data Analysis
+
+
 ## analysis 1
 I am interested in the total numbers of approved applications through the year between 2008 and 2021. So i filter the application status and group by the application types. 
-Then, the result is shown in the Figure.  (Figure1 \@ref(fig:graph))
-```{r graph,fig.cap="raw data set", echo = FALSE,fig.width=10, fig.height=4}
+Then, the result is shown in the Figure. 
+
+(Figure1 \@ref(fig:graph))
+
+```{r graph,fig.cap="Total approved application (2008-2021)", echo = FALSE,fig.width=10, fig.height=4}
 accepted_applications <- 
   development_applications %>% 
   tidyr::drop_na(status) %>% # We only want rows that have data for status
@@ -118,8 +125,12 @@ p
 
 ## analysis 2
 
-As mentioned in the introduction, smart investor usually hold a long term view towards the property they invest. For those in progress development applications, although they have not finished yet, they might have a positive impact in the future. So based on this idea, I sort out all the in progress applications by street name, and the result is shown in the Figure2. (Figure2 \@ref(fig:graph2))
-```{r graph2,fig.cap="in process apps", echo = FALSE,fig.width=10, fig.height=4}
+As mentioned in the introduction, the smart investor usually holds a long-term view towards the property they invest in. For those in progress development applications, although they have not finished yet, they might have a positive impact in the future. So based on this idea, I sort out all the in-progress applications by street name, and the result is shown in Figure2. Taking this measurable feature into considerations, William Duncan street might have the most potential value for investment.
+When I input the first 15 addresses into the map, I found that they are all concentrated near Downsview Airport and close to the 401 highway intersection. I infer that this area may develop very rapidly in the next five years.
+
+(Figure \@ref(fig:analysis2))
+
+```{r analysis2, fig.cap="In process apps", echo = FALSE,fig.width=10, fig.height=4}
 in_progress_applications <- 
   development_applications %>% 
   tidyr::drop_na(status) %>% # We only want rows that have data for status
@@ -145,7 +156,7 @@ p
 
 ## analysis 3
 If i am person who want buy a house in Adelaide street, I probably would like to know more about the surrounding developments. Using **KableExtra**[@kable], the table below shows what are all the applications constructed or will be constructed near this street in 2020. 
-(Table \@ref(tab:table2))
+(Table \@ref(tab:table2)) 
 
 ```{r table2, tab.cap="ALL applications in ADELAIDE Street", echo = F}
 ADELAIDE_street_applications<-
@@ -156,15 +167,15 @@ ADELAIDE_street_applications<-
 
 
 ADELAIDE_street_applications %>% 
-  filter(year %in% c("2020"))  %>%
-  select(-year,-month,-day, -street_name,-postal) %>%
+  filter(year %in% c("2020"))  %>% # filter the year in 2020
+  select(-year,-month,-day, -street_name,-postal) %>% # remove the useless column and only keep the highlight columns
   kableExtra::kbl(caption = "ALL applications in ADELAIDE Street (2021)") %>%
   kableExtra::kable_styling(full_width = F,
                             latex_options = "scale_down",
                             position = "center")%>%
-  column_spec(1, color = "black")%>%
+  column_spec(1, color = "black")%>% # column_spec is used to edit the columns
   column_spec(2, color = "black")%>%
-  column_spec(3, color = "black", width="40em", background = "gray")%>%
+  column_spec(3, color = "black", width="40em", background = "gray")%>% # make the background in gray color
   column_spec(4, color = "black")
 
 ```
