@@ -51,9 +51,26 @@ all_data<-read.csv("raw_data.csv")
   kableExtra::kable_styling(latex_options = "scale_down") # use scale_down option to make the font smaller and knit a completed table to PDF
 ```
 
-This dataset lists all currently active (open) and inactive (closed) Community Planning applications, Committee of Adjustment applications and Toronto Local Appeal Body appeals received by the City between 2008 till present.The data set has totally 66555 rows and contains 18 columns. The data set was published in three formats, which are CSV, Jason and XML.The latest time when the data was refreshed is Jan 27th, 2021. Also, this dataset is refreshed monthly.
+This dataset lists all currently active (open) and inactive (closed) Community Planning applications, Committee of Adjustment applications and Toronto Local Appeal Body appeals received by the City between 2008 till present.The data set has totally 66555 rows and contains 15 columns. More details are shown in the list below. The data set was published in three formats, which are CSV, Jason and XML.The latest time when the data was refreshed is Jan 27th, 2021. Also, this dataset is refreshed monthly.
+
+1. `id`: Unique row identifier for Open Data database
+2. `APPLICATION#`: Development application file number
+3. `APPLICATION_TYPE`: Type of application
+4. `DATE_SUBMITTED`:Date that the application was accepted by the City.
+5. `DESCRIPTION`: Brief description of the application
+6. `HEARING_DATE`:
+7. `POSTAL`:First 3 digits of postal code. Example: M5V
+8. `REFERENCE_FILE#`: Committee of Adjustment or Toronto Local Appeal Body specific reference file number
+9. `STATUS`: Current status of the application. 
+10. `STREET_DIRECTION`: Address information
+11. `STREET_NAME`:Address information
+12. `STREET_NUM`:Address information
+13. `STREET_TYPE`:Address information
+14. `X`:X coordinates
+15. `Y`:Y coordinates
 
 ## Data cleaning and preparation 
+
 Firstly, i will remove the rows with missing value to improve the accuracy. **Janitor** package is used to clean the column name. [@jan] Then, different types applications are interpreted as following:
  CD - Condominium
  OZ - Official Plan/Rezoning
@@ -169,7 +186,7 @@ ADELAIDE_street_applications<-
 ADELAIDE_street_applications %>% 
   filter(year %in% c("2020"))  %>% # filter the year in 2020
   select(-year,-month,-day, -street_name,-postal) %>% # remove the useless column and only keep the highlight columns
-  kableExtra::kbl(caption = "ALL applications in ADELAIDE Street (2021)") %>%
+  kableExtra::kbl(caption = "ALL applications in ADELAIDE Street (2020)") %>%
   kableExtra::kable_styling(full_width = F,
                             latex_options = "scale_down",
                             position = "center")%>%
